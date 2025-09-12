@@ -19,7 +19,7 @@ Node* buildCircle(const int n, Node*& cur, int& size) {
     //      cur->next = head // as the current node is the  
     //      size++; 
 
-    Node* head = new Node{1, nullptr};
+    Node* head = new Node{.data = 1, .next = nullptr};
     head->next = head;
 
     cur = head; 
