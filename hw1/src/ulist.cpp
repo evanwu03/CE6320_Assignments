@@ -72,7 +72,7 @@ void displayUList(const UList& L) {
             if (i == 0 ) { 
                 std::cout << "[ ";
             }
-            
+
             std::cout << cur->a[i] << " ";
             idx++;
         }
@@ -81,3 +81,8 @@ void displayUList(const UList& L) {
     }
 }
 
+int getAt(const UList& L, int idx) { 
+
+
+    
+}
