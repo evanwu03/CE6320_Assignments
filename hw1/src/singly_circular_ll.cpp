@@ -18,12 +18,7 @@ Node *buildCircle(const int n, Node *&cur, int &size)
     //      cur->next = head // as the current node is the
     //      size++;
 
-    if (n <= 0)
-        return nullptr;
-
-    // Create head of linked list
-    size = 1;
-    Node *head = new Node{1, nullptr};
+    Node* head = new Node{1, nullptr};
     head->next = head;
     cur = head;
 
