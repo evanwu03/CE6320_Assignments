@@ -140,7 +140,7 @@ void insertAt(UList &L, int idx, int x)
         // to reflect this split
         cur->cnt /= 2;
 
-        if (localOffset > split)
+        if (localOffset >= split)
         {                         // Place in new block
             localOffset -= split; // Index relative to new block
 
@@ -201,9 +201,69 @@ void eraseAt(UList& L, int idx) {
     {
         std::cout << "ERROR: Invalid index specified\n";
         return;
-        
+
     }
 
+    int localOffset = -1;
+    Block* cur = findBlock(L, idx, localOffset);
+
+    // Check if erasing will cause elements to shift 
+
+    // If erasing at the end of array just decrease cnt
+    if (localOffset == cur->cnt-1)
+    {
+        cur->cnt--;
+    }
+    else if  (localOffset < cur->cnt-1) {
+
+        // left shift 
+        for(int i = localOffset; i < cur->cnt; i++) { 
+
+            cur->a[i] = cur->a[i+1];
+        }
+        cur->cnt--;
+    }
+
+    L.n--; // Decrease number of global elements
+
+    // If number of elements after erasing is < B/2 
+    // We'll need to merge or borrow 
+    // Borrow if neighboring block has >B/2 elements 
+    // Will have to shift neighboring block's elements 
+    if (cur->cnt < B/2) {
+
+        Block* neighbor = cur->next;
+        
+        if(!neighbor) { 
+            std::cout << "No neighbor to borrow from or merge with, Returning early\n";
+        }
+        else if(neighbor->cnt > B/2) { // Borrow
+            cur->a[cur->cnt] = neighbor->a[0]; // Append first element of neighbor to end of current
+            cur->cnt++;
+
+            // Shift all elements in neighbor to left
+            // left shift 
+            for(int i = 0; i < neighbor->cnt-1; i++) { 
+
+                neighbor->a[i] = neighbor->a[i+1];
+            }
+            neighbor->cnt--;
+    
+        }
+        else if (neighbor->cnt <= B/2) { // Merge
+ 
+            for (int i = 0; i < neighbor->cnt; i++) { 
+
+                //std::cout << "While Merging: " << neighbor->a[i] << "\n";
+                cur->a[cur->cnt + i] = neighbor->a[i]; 
+            }
+            cur->cnt += neighbor->cnt;
+
+            // Update pointers and delete neighbor
+            cur->next = neighbor->next;
+            delete neighbor;
+        }
+    }
 
 }
 
@@ -212,15 +272,23 @@ void eraseAt(UList& L, int idx) {
 Block *findBlock(const UList &L, int idx, int &off)
 {
 
-    int blockIdx = idx / B; // Index of Block element at idx is located
     Block *cur = L.head;
 
-    for (int i = 0; i < blockIdx; i++)
-    {
+    int pos = idx;
+    off = -1;
+    while(cur) { 
+
+        if (pos < cur->cnt) { 
+            // idx lies in this block 
+            off = pos;
+            return cur;
+        }
+        
+        pos -= cur->cnt;
         cur = cur->next;
     }
 
     off = idx % B;
-    return cur;
+    return nullptr;
 }
 

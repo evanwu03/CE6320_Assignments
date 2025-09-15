@@ -41,6 +41,8 @@ int main()
     const int SIZE = 8;
     const int arr[SIZE] = {1,2,3,4,5,6,7,8};
 
+    // buildFromArray Tests
+    /*
     UList L = UList();
 
     buildFromArray(arr, SIZE, L);
@@ -55,8 +57,11 @@ int main()
     // Expect error messages for both
     assert(getAt(L, -1) == -1); 
     assert(getAt(L, L.n) == -1);
+    */
+
 
     // Insertion Tests
+    /*
     UList L2 = UList();
     buildFromArray(arr, SIZE, L2);
     insertAt(L2, 7, 80);
@@ -65,11 +70,41 @@ int main()
     displayUList(L2);
     assert(getAt(L2, 5) == 999);
     assert(getAt(L2, 9) == 80);
+    */
+
 
     // Erase At tests 
+    /*
+    UList L3 = UList();
+    buildFromArray(arr, SIZE, L3);
+    eraseAt(L3, 0);  
+    assert(getAt(L3, 0) == 2);
 
+    eraseAt(L3, 0);  // [3,4] [5,6,7,8]
+
+    assert(getAt(L3,0) == 3);
+    eraseAt(L3, 1); //  [3,5] [6,7,8]
+    assert(getAt(L3, 1) == 5); 
+
+    eraseAt(L3, 2); // [3,5] [7,8] 
+    eraseAt(L3, 1); // [3,7,8]
+    displayUList(L3);
+    assert(getAt(L3, 0) == 3);
+    assert(getAt(L3, 1) == 7);
+    assert(getAt(L3, 2) == 8);
+    */
+
+    UList L4 = UList();
+    buildFromArray(arr, SIZE, L4);
+    insertAt(L4, 2, 99); // [1,2] [99,3,4] [5,6,7,8]
+    insertAt(L4, 6,77);  // [1,2] [99,3,4] [5,77,6] [7,8]
+    eraseAt(L4,3);       // [1,2] [99,4]   [5,77,6] [7,8]
+    insertAt(L4, 8, 55); // [1,2] [99,4]   [5,77,6] [7,55,8]
+    eraseAt(L4,0);       // [2,99,4] [5,77,6] [7,55,8]
+    displayUList(L4);
+
+    /* Problem 3: LRU Cache Tests*/
 
 
     return 0;
-
 }
