@@ -45,8 +45,31 @@ int main()
 
     buildFromArray(arr, SIZE, L);
     displayUList(L);
-    
     assert(L.n == SIZE);
 
+    // Test for getAt() function
+    for (int i = 0; i < L.n; i++) {
+        assert(getAt(L, i) == i+1);
+    }
+
+    // Expect error messages for both
+    assert(getAt(L, -1) == -1); 
+    assert(getAt(L, L.n) == -1);
+
+    // Insertion Tests
+    UList L2 = UList();
+    buildFromArray(arr, SIZE, L2);
+    insertAt(L2, 7, 80);
+    insertAt(L2, 6, 100);
+    insertAt(L2, 5, 999);
+    displayUList(L2);
+    assert(getAt(L2, 5) == 999);
+    assert(getAt(L2, 9) == 80);
+
+    // Erase At tests 
+
+
+
     return 0;
+
 }

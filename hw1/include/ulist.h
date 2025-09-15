@@ -29,5 +29,16 @@ void displayUList(const UList& L);
 // Return the value at global index idx
 int getAt(const UList& L, int idx);
 
+// Insert x at global index idx, shifting items as needed.
+// If a block is full, split it. 
+void insertAt(UList& L, int idx, int x);
+
+// Erase the element at global index idx, shifting items as needed.
+// If a block becomes under half full, borrow or merge with neighnor.
+void eraseAt(UList& L, int idx);
+
+// Helper: find block containing index idx, return pointer and local offset
+Block* findBlock(const UList& L, int idx, int& off);
+
 
 #endif // ULIST_H
