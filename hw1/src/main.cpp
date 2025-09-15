@@ -6,11 +6,12 @@ By Evan Wu
 
 // CPP libraries
 #include <iostream>
+#include "assert.h"
 
 // User-defined files 
 #include "singly_circular_ll.h"
-#include "ulist.h"  
-#include "assert.h"
+#include "ulist.h" 
+#include  "LRU.h"
 
 static const int NUM_NODES = 5;
 
@@ -94,6 +95,8 @@ int main()
     assert(getAt(L3, 2) == 8);
     */
 
+    // Sample Program
+    /*
     UList L4 = UList();
     buildFromArray(arr, SIZE, L4);
     insertAt(L4, 2, 99); // [1,2] [99,3,4] [5,6,7,8]
@@ -102,9 +105,45 @@ int main()
     insertAt(L4, 8, 55); // [1,2] [99,4]   [5,77,6] [7,55,8]
     eraseAt(L4,0);       // [2,99,4] [5,77,6] [7,55,8]
     displayUList(L4);
+    */
+
 
     /* Problem 3: LRU Cache Tests*/
+    const int Ccap = 3;
+    const int K = 10;
+    LRU lru = LRU();
+    initLRU(lru, Ccap, K);
 
+    for(int i = 0; i < lru.K; i++) {
+        assert(lru.dir[i] == nullptr);
+    }
+
+    int out = 0;
+    put(lru, 2, 20);
+    put(lru, 5, 50);
+    put(lru, 7, 70);
+    displayLRU(lru);
+    
+    assert(get(lru, 2, out));
+    assert(out == 20);
+    displayLRU(lru);
+
+    put(lru, 9, 90);
+    displayLRU(lru);
+
+    
+    assert(!get(lru, 5, out));
+    
+    put(lru, 2, 21);
+    displayLRU(lru);
+
+    
+    assert(get(lru, 2, out));
+    assert(out == 21);
+    displayLRU(lru);
+    
+    assert(get(lru, 7, out));
+    displayLRU(lru);
 
     return 0;
 }
